@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكنو هَب | المنصة التقنية الشاملة والذكاء الاصطناعي</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b'
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .ad-banner-placeholder {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(168, 85, 247, 0.12) 100%);
+            border: 2px dashed rgba(99, 102, 241, 0.35);
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-slide-down {
+            animation: slideDown 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <!-- 1. STICKY WELCOME BANNER -->
+    <div id="welcomeBanner" class="bg-gradient-to-r from-brand-600 via-purple-600 to-indigo-700 text-white shadow-xl relative z-50 animate-slide-down">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <span class="flex p-2 rounded-lg bg-white/10 backdrop-blur">
+                    <i class="fa-solid fa-rocket text-xl text-yellow-300"></i>
+                </span>
+                <p class="font-medium text-sm sm:text-base">
+                    مرحباً بك في <span class="font-bold underline decoration-yellow-400">تكنو هَب</span>! منصتك الأولى للبرامج، التطبيقات، وأدوات الذكاء الاصطناعي.
+                </p>
+            </div>
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <button onclick="switchTab('ai-tools')" class="bg-white text-brand-700 hover:bg-yellow-300 transition px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold shadow-md">
+                    <i class="fa-solid fa-robot ml-1"></i>جرب الذكاء الاصطناعي
+                </button>
+                <button onclick="closeWelcomeBanner()" class="text-white/80 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. HEADER & NAVIGATION -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-4 space-x-reverse cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-500 to-purple-500 flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-brand-500/30">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-wide bg-gradient-to-r from-white via-indigo-200 to-brand-500 bg-clip-text text-transparent">تكنو هَب</span>
+                        <span class="block text-xs text-indigo-400 font-semibold">TECH & AI ECOSYSTEM</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Tabs -->
+                <nav class="hidden lg:flex items-center space-x-1 space-x-reverse bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800 text-sm font-semibold">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-xl text-brand-500 bg-slate-800 transition shadow-sm">الرئيسية</button>
+                    <button onclick="switchTab('software')" id="nav-software" class="nav-btn px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition">البرامج والتكنولوجيا</button>
+                    <button onclick="switchTab('apps')" id="nav-apps" class="nav-btn px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition">التطبيقات</button>
+                    <button onclick="switchTab('editing')" id="nav-editing" class="nav-btn px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition">أدوات التعديل</button>
+                    <button onclick="switchTab('ai-tools')" id="nav-ai-tools" class="nav-btn px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition flex items-center gap-1">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> الذكاء الاصطناعي
+                    </button>
+                    <button onclick="switchTab('community')" id="nav-community" class="nav-btn px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition">المجتمع</button>
+                    <button onclick="switchTab('contact')" id="nav-contact" class="nav-btn px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition">اتصل بنا</button>
+                </nav>
+
+                <!-- Auth & User Actions -->
+                <div class="flex items-center space-x-3 space-x-reverse" id="authArea">
+                    <!-- Rendered dynamically -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TOP HEADER AD BANNER -->
+    <div class="max-w-7xl mx-auto px-4 mt-6">
+        <div class="ad-banner-placeholder rounded-2xl p-4 text-center relative overflow-hidden group cursor-pointer" onclick="triggerAdClick('banner-top')">
+            <span class="bg-indigo-500/20 text-indigo-300 text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider mb-1 inline-block">إعلان مميز</span>
+            <h4 class="text-base font-bold text-white group-hover:text-brand-500 transition">انضم لمخدمات الاستضافة السحابية الفائقة مع خصم 50% للمطورين</h4>
+            <p class="text-xs text-slate-400">انقر هنا للحصول على العرض واكسب 15 نقطة مجانية لحسابك!</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- Tab 1: HOME PAGE -->
+        <section id="tab-home" class="tab-content space-y-8">
+            <!-- Hero Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Featured Post -->
+                <div class="lg:col-span-2 glass-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between border border-slate-800 hover:border-brand-500/30 transition">
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="bg-brand-500/20 text-brand-400 text-xs font-bold px-3 py-1 rounded-full border border-brand-500/30">جديد التكنولوجيا</span>
+                            <span class="text-slate-400 text-xs"><i class="fa-regular fa-clock ml-1"></i>منذ ساعتين</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-white leading-snug mb-4">
+                            مكتبات وتطبيقات الذكاء الاصطناعي التوليدي لعام 2026: دليل شامل للمطورين والمصممين
+                        </h1>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                            استكشف أحدث الأدوات والنسخ الذكية المتاحة للتحميل المباشر. احصل على أدوات التعديل البرمجية، التطبيقات المعدلة، وكيفية ربط نماذج Gemini في مشاريعك الخاصة مجاناً.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center justify-between border-t border-slate-800 pt-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand-600/30 border border-brand-500 flex items-center justify-center font-black text-brand-400">
+                                M
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-white">Mohanad <i class="fa-solid fa-circle-check text-brand-500 text-xs"></i></p>
+                                <p class="text-xs text-yellow-400 font-semibold">مؤسس المنصة (Admin)</p>
+                            </div>
+                        </div>
+                        <button onclick="switchTab('ai-tools')" class="bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-brand-600/30 transition">
+                            استكشف الأدوات <i class="fa-solid fa-arrow-left mr-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sidebar Status & Ad Panel -->
+                <div class="space-y-6">
+                    <!-- User Status Card -->
+                    <div class="glass-panel rounded-3xl p-6 border border-slate-800 relative overflow-hidden">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-id-card text-brand-500"></i> بطاقة عضويتك
+                        </h3>
+                        <div id="sidebarUserStatus">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Ad Unit -->
+                    <div class="ad-banner-placeholder rounded-3xl p-6 text-center cursor-pointer relative" onclick="triggerAdClick('sidebar-ad')">
+                        <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded absolute top-3 right-3">إعلان</span>
+                        <i class="fa-solid fa-layer-group text-4xl text-purple-400 mb-3"></i>
+                        <h4 class="font-bold text-white mb-2">حزمة أدوات المونتاج والتعديل 2026</h4>
+                        <p class="text-xs text-slate-400 mb-4">حمل أكثر من 500 فلتر ومؤثر مجاناً بعد مشاهدة الإعلان الفوري.</p>
+                        <button class="w-full bg-slate-800 hover:bg-slate-700 text-brand-400 py-2 rounded-xl font-bold text-xs border border-brand-500/30 transition">
+                            مشاهدة الإعلان (+15 نقطة)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Feed Selector -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                    <i class="fa-solid fa-fire text-orange-500"></i> أحدث المشاركات والتطبيقات
+                </h2>
+                <button onclick="openPublishModal()" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg transition">
+                    <i class="fa-solid fa-plus"></i> نشر تطبيق / مقال
+                </button>
+            </div>
+
+            <!-- Main Post & App Feed -->
+            <div id="mainFeedGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered dynamically -->
+            </div>
+        </section>
+
+        <!-- Tab 2: SOFTWARE & TECH -->
+        <section id="tab-software" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-slate-900 to-indigo-950 p-8 rounded-3xl border border-slate-800">
+                <h2 class="text-3xl font-black text-white mb-2"><i class="fa-solid fa-laptop-code text-brand-500 ml-2"></i> قسم البرامج والتكنولوجيا</h2>
+                <p class="text-slate-400">استعرض أحدث البرامج المكتوب أكوادها ومراجعات الأدوات التقنية والأنظمة.</p>
+            </div>
+            <div id="softwareFeed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- Tab 3: APPS -->
+        <section id="tab-apps" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-slate-900 to-purple-950 p-8 rounded-3xl border border-slate-800">
+                <h2 class="text-3xl font-black text-white mb-2"><i class="fa-solid fa-mobile-screen-button text-purple-500 ml-2"></i> قسم التطبيقات والملفات</h2>
+                <p class="text-slate-400">تطبيقات الجوال والكمبيوتر المجهزة للتحميل المباشر مع نظام حماية التحميل بالإعلانات.</p>
+            </div>
+            <div id="appsFeed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- Tab 4: EDITING TOOLS -->
+        <section id="tab-editing" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-slate-900 to-pink-950 p-8 rounded-3xl border border-slate-800">
+                <h2 class="text-3xl font-black text-white mb-2"><i class="fa-solid fa-photo-film text-pink-500 ml-2"></i> أدوات التعديل والمونتاج</h2>
+                <p class="text-slate-400">برامج وأدوات التعديل على الصور، الفيديوهات، والأصوات المتاحة مجاناً للجمهور.</p>
+            </div>
+            <div id="editingFeed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- Tab 5: AI STUDIO / TOOLS -->
+        <section id="tab-ai-tools" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- AI Assistant Chat Workspace -->
+                <div class="lg:col-span-2 glass-panel rounded-3xl p-6 border border-slate-800 flex flex-col h-[650px]">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-red-500 flex items-center justify-center text-white font-bold text-xl">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white">مساعد تكنو هَب الذكي (Gemini AI)</h3>
+                                <p class="text-xs text-emerald-400 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span> متصل وجاهز لتوليد البرامج والمحتوى</p>
+                            </div>
+                        </div>
+                        <span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">مجاني للأعضاء</span>
+                    </div>
+
+                    <!-- Chat Messages Log -->
+                    <div id="aiChatLog" class="flex-grow overflow-y-auto space-y-4 p-2">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">AI</div>
+                            <div class="bg-slate-800 p-4 rounded-2xl rounded-tr-none text-slate-200 text-sm leading-relaxed max-w-[85%] border border-slate-700">
+                                أهلاً بك! أنا مساعدك البرمجي والتقني الذكي. يمكنك طلبي لكتابة سكريبت، إنشاء تطبيق، صياغة مقال تقني لنشره في الموقع، أو حل مشكلة برمجية. كيف يمكنني مساعدتك اليوم؟
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Input Area -->
+                    <div class="border-t border-slate-800 pt-4 mt-2">
+                        <form id="aiChatForm" onsubmit="handleAISubmit(event)" class="flex gap-2">
+                            <input type="text" id="aiInput" placeholder="اطلب من الذكاء الاصطناعي: اكتب كود تطبيق محول عملات، أداة تعديل..." required
+                                   class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-500">
+                            <button type="submit" id="aiSendBtn" class="bg-brand-600 hover:bg-brand-500 text-white px-5 py-3 rounded-xl font-bold text-sm shadow-md transition flex items-center gap-1">
+                                <span>إرسال</span> <i class="fa-solid fa-paper-plane text-xs"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- AI Quick Tools -->
+                <div class="space-y-6">
+                    <div class="glass-panel rounded-3xl p-6 border border-slate-800">
+                        <h3 class="font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-yellow-400"></i> مولدات سريعة
+                        </h3>
+                        <div class="space-y-3">
+                            <button onclick="quickAIPrompt('اكتب مقالاً تقنياً احترافياً عن أحدث أدوات التعديل على الصور بالذكاء الاصطناعي مع إيجابيات وسلبيات كل أداة.')"
+                                    class="w-full text-right bg-slate-900/80 hover:bg-slate-800 p-3 rounded-2xl border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition flex items-center justify-between">
+                                <span><i class="fa-solid fa-pen-nib text-brand-400 ml-2"></i> صياغة مقال تقني جاهز للنشر</span>
+                                <i class="fa-solid fa-chevron-left text-slate-600"></i>
+                            </button>
+                            <button onclick="quickAIPrompt('اكتب كود تطبيق حاسبة تفاعلي بلغة HTML و JavaScript بتنسيق جميل جداً.')"
+                                    class="w-full text-right bg-slate-900/80 hover:bg-slate-800 p-3 rounded-2xl border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition flex items-center justify-between">
+                                <span><i class="fa-solid fa-code text-indigo-400 ml-2"></i> كتابة كود برنامج أو تطبيق كامل</span>
+                                <i class="fa-solid fa-chevron-left text-slate-600"></i>
+                            </button>
+                            <button onclick="quickAIPrompt('اعطني قائمة بأفضل 5 تطبيقات لتعديل الفيديو على الهواتف مع شرح مختصر لكل تطبيق.')"
+                                    class="w-full text-right bg-slate-900/80 hover:bg-slate-800 p-3 rounded-2xl border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition flex items-center justify-between">
+                                <span><i class="fa-solid fa-list-check text-pink-400 ml-2"></i> ترشيحات تطبيقات مفيدة</span>
+                                <i class="fa-solid fa-chevron-left text-slate-600"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Side Ad Slot -->
+                    <div class="ad-banner-placeholder rounded-3xl p-5 text-center cursor-pointer" onclick="triggerAdClick('ai-side-ad')">
+                        <span class="text-[10px] bg-brand-500/20 text-brand-300 px-2 py-0.5 rounded">إعلان مميز</span>
+                        <h4 class="text-sm font-bold text-white mt-2">احصل على سيرفر AI متكامل</h4>
+                        <p class="text-xs text-slate-400 my-2">ادعم مساهماتك بفتح باقات المعالجة السريعة عبر شركائنا.</p>
+                        <span class="text-xs text-yellow-400 font-bold underline">انقر هنا لكسب +15 نقطة</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 6: COMMUNITY & MEMBERS -->
+        <section id="tab-community" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-3xl p-8 border border-slate-800">
+                <h2 class="text-3xl font-black text-white mb-2"><i class="fa-solid fa-users-gear text-indigo-400 ml-2"></i> مجتمع الأعضاء والمساهمين</h2>
+                <p class="text-slate-400">جدول ترتيب الأعضاء المميزين، الرتب، الألقاب، وإحصائيات التفاعل.</p>
+
+                <div class="mt-8 overflow-x-auto">
+                    <table class="w-full text-right text-sm">
+                        <thead class="bg-slate-900/80 text-slate-400 border-b border-slate-800">
+                            <tr>
+                                <th class="p-4 rounded-r-xl">العضو</th>
+                                <th class="p-4">الرتبة</th>
+                                <th class="p-4">اللقب</th>
+                                <th class="p-4">النقاط</th>
+                                <th class="p-4 rounded-l-xl">المساهمات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody" class="divide-y divide-slate-800">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 7: CONTACT US -->
+        <section id="tab-contact" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-3xl p-8 border border-slate-800 max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-brand-500/20 text-brand-400 rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold mb-3 border border-brand-500/30">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h2 class="text-3xl font-black text-white">اتصل بنا</h2>
+                    <p class="text-slate-400 text-sm mt-2">يسعدنا تواصلك معنا لأي استفسارات، اقتراحات، أو طلبات إعلانية وشراكات تقنية.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Phone Contact -->
+                    <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 flex items-center gap-4 hover:border-brand-500/40 transition">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400 block font-semibold">رقم الهاتف / واتساب</span>
+                            <a href="tel:97470343384" class="text-lg font-bold text-white hover:text-emerald-400 transition" dir="ltr">97470343384</a>
+                        </div>
+                    </div>
+
+                    <!-- Email Contact -->
+                    <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 flex items-center gap-4 hover:border-brand-500/40 transition">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400 block font-semibold">البريد الإلكتروني الرسمي</span>
+                            <a href="mailto:dark500000000005@gmail.com" class="text-sm font-bold text-white hover:text-purple-400 transition break-all">dark500000000005@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <form onsubmit="handleContactSubmit(event)" class="space-y-4 border-t border-slate-800 pt-6">
+                    <h3 class="font-bold text-white text-base mb-2">إرسال رسالة مباشرة</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" id="contactName" placeholder="الاسم الكريم" required class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                        <input type="email" id="contactEmail" placeholder="البريد الإلكتروني" required class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <textarea id="contactMsg" rows="4" placeholder="اكتب رسالتك أو استفسارك هنا..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500"></textarea>
+                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg transition">إرسال الرسالة</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Tab 8: COMPREHENSIVE ADMIN DASHBOARD (Hidden for non-Admins) -->
+        <section id="tab-admin" class="tab-content hidden space-y-8">
+            <div class="bg-gradient-to-r from-red-900/40 via-slate-900 to-indigo-900/40 p-6 sm:p-8 rounded-3xl border border-red-500/30">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <span class="bg-red-500/20 text-red-400 text-xs font-bold px-3 py-1 rounded-full border border-red-500/30">Admin Open-Source Control Panel</span>
+                        <h2 class="text-3xl font-black text-white mt-2"><i class="fa-solid fa-user-shield text-red-500 ml-2"></i> لوحة التحكم الشاملة للأدمن</h2>
+                        <p class="text-slate-400 text-sm mt-1">إشراف كامل على الأعضاء، الإعلانات، المحتوى، إحصائيات النظام والصلاحيات.</p>
+                    </div>
+                    <span class="bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded-xl text-xs font-bold border border-emerald-500/30 flex items-center gap-2">
+                        <i class="fa-solid fa-lock-open"></i> صلاحيات الأدمن كاملة مفعّلة (Mohanad)
+                    </span>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 text-center">
+                    <p class="text-xs text-slate-400 font-semibold mb-1">إجمالي الأعضاء</p>
+                    <h3 class="text-3xl font-black text-white" id="adminTotalUsers">0</h3>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 text-center">
+                    <p class="text-xs text-slate-400 font-semibold mb-1">إجمالي المنشورات</p>
+                    <h3 class="text-3xl font-black text-brand-400" id="adminTotalPosts">0</h3>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 text-center">
+                    <p class="text-xs text-slate-400 font-semibold mb-1">الإعلانات النشطة</p>
+                    <h3 class="text-3xl font-black text-yellow-400" id="adminActiveAds">3</h3>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 text-center">
+                    <p class="text-xs text-slate-400 font-semibold mb-1">نقاط النظام المصدرة</p>
+                    <h3 class="text-3xl font-black text-emerald-400" id="adminTotalPoints">0</h3>
+                </div>
+            </div>
+
+            <!-- Admin Management Tabs -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- User Management -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center justify-between">
+                        <span><i class="fa-solid fa-users text-brand-500 ml-2"></i> إدارة الأعضاء والصلاحيات</span>
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-xs">
+                            <thead class="bg-slate-900 text-slate-400">
+                                <tr>
+                                    <th class="p-3">الاسم</th>
+                                    <th class="p-3">الرتبة</th>
+                                    <th class="p-3">النقاط</th>
+                                    <th class="p-3">الإجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminUsersTable" class="divide-y divide-slate-800">
+                                <!-- JS Populate -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Post & Content Moderation -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center justify-between">
+                        <span><i class="fa-solid fa-newspaper text-purple-500 ml-2"></i> إدارة المحتوى والتطبيقات</span>
+                    </h3>
+                    <div class="space-y-3 max-h-[350px] overflow-y-auto p-1" id="adminPostsList">
+                        <!-- JS Populate -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER AD & FOOTER -->
+    <div class="max-w-7xl mx-auto px-4 mb-6">
+        <div class="ad-banner-placeholder rounded-2xl p-4 text-center cursor-pointer" onclick="triggerAdClick('banner-bottom')">
+            <span class="bg-purple-500/20 text-purple-300 text-xs px-2 py-0.5 rounded font-bold">مساحة إعلانية سفلية</span>
+            <p class="text-xs text-slate-300 mt-1">هل ترغب بنشر تطبيقك أو أداتك في الصفحة الرئيسية؟ تواصل مع الإدارة عبر قسم اتصل بنا.</p>
+        </div>
+    </div>
+
+    <footer class="glass-panel border-t border-slate-800 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-400 text-xs space-y-3">
+            <p class="font-bold text-slate-300">تكنو هَب © 2026 - المنصة المتكاملة للتكنولوجيا والذكاء الاصطناعي</p>
+            <div class="flex justify-center gap-6 text-slate-500">
+                <a href="#" class="hover:text-brand-400">الشروط والأحكام</a>
+                <a href="#" class="hover:text-brand-400">سياسة الخصوصية</a>
+                <a href="#" onclick="switchTab('contact'); return false;" class="hover:text-brand-400">اتصل بنا</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- Auth Modal (Login / Register / OTP Simulation) -->
+    <div id="authModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-panel bg-slate-900 border border-slate-800 w-full max-w-md p-6 sm:p-8 rounded-3xl relative shadow-2xl">
+            <button onclick="closeAuthModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+
+            <!-- Step 1: Choice / Form -->
+            <div id="authStepForm">
+                <div class="flex border-b border-slate-800 mb-6">
+                    <button onclick="toggleAuthTab('login')" id="tabBtnLogin" class="flex-1 py-3 text-center font-bold text-brand-500 border-b-2 border-brand-500 text-sm">تسجيل الدخول</button>
+                    <button onclick="toggleAuthTab('register')" id="tabBtnRegister" class="flex-1 py-3 text-center font-bold text-slate-400 hover:text-white text-sm">حساب جديد</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">اسم المستخدم أو البريد الإلكتروني</label>
+                        <input type="text" id="loginEmail" placeholder="Mohanad أو البريد" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">كلمة المرور</label>
+                        <input type="password" id="loginPass" placeholder="••••" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg transition">دخول</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" onsubmit="startRegistration(event)" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">الاسم الكامل</label>
+                        <input type="text" id="regName" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">البريد الإلكتروني (لتفعيل OTP)</label>
+                        <input type="email" id="regEmail" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">كلمة المرور</label>
+                        <input type="password" id="regPass" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg transition">إرسال رمز التفعيل OTP</button>
+                </form>
+            </div>
+
+            <!-- Step 2: Simulated OTP Verification -->
+            <div id="authStepOTP" class="hidden text-center space-y-4">
+                <div class="w-16 h-16 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center mx-auto text-2xl font-bold border border-purple-500/30">
+                    <i class="fa-solid fa-envelope-circle-check"></i>
+                </div>
+                <h3 class="text-xl font-extrabold text-white">تأكيد البريد الإلكتروني</h3>
+                <p class="text-xs text-slate-400">تم محاكاة إرسال رمز التفعيل المكون من 4 أرقام إلى بريدك. استخدم الرمز التجريبي: <span id="simulatedOTPCode" class="text-yellow-400 font-black text-base px-2 py-0.5 bg-slate-800 rounded border border-slate-700">1234</span></p>
+
+                <div class="flex justify-center gap-2 my-4" dir="ltr">
+                    <input type="text" id="otpInput" maxlength="4" placeholder="1234" class="w-32 bg-slate-950 border border-slate-700 rounded-xl py-3 text-center text-xl font-black text-brand-400 tracking-widest focus:outline-none focus:border-brand-500">
+                </div>
+
+                <button onclick="verifyOTPAndFinish()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg transition">تأكيد وتفعيل الحساب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Publish Content / Application Modal -->
+    <div id="publishModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-panel bg-slate-900 border border-slate-800 w-full max-w-xl p-6 sm:p-8 rounded-3xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closePublishModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+
+            <h3 class="text-xl font-extrabold text-white mb-1"><i class="fa-solid fa-cloud-arrow-up text-brand-500 ml-2"></i> نشر تطبيق أو مقال تقني</h3>
+            <p class="text-xs text-slate-400 mb-6">شارك ابتكاراتك أو ملفاتك مع المجتمع واكسب +25 نقطة لكل نشر متكامل.</p>
+
+            <form onsubmit="handlePublish(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">عنوان المشاركة / التطبيق</label>
+                    <input type="text" id="pubTitle" required placeholder="مثال: أداة تحويل الصور إلى سكتش بالذكاء الاصطناعي" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">القسم</label>
+                        <select id="pubCategory" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                            <option value="software">البرامج والتكنولوجيا</option>
+                            <option value="apps">التطبيقات والملفات</option>
+                            <option value="editing">أدوات التعديل</option>
+                            <option value="ai-tools">أدوات الذكاء الاصطناعي</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">رابط تحميل الملف / التطبيق (اختياري)</label>
+                        <input type="url" id="pubDownloadUrl" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">وصف شامل والمحتوى البرمجي</label>
+                    <textarea id="pubContent" rows="5" required placeholder="اكتب التفاصيل هنا أو ضع الأكواد البرمجية والتوجيهات..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">حجم الملف (إن وجد)</label>
+                    <input type="text" id="pubFileSize" placeholder="مثال: 45 MB أو سكريبت أونلاين" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg transition">نشر الآن على الموقع</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ad-Watch Rewarded Download Unlock Modal -->
+    <div id="rewardDownloadModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-panel bg-slate-900 border border-slate-800 w-full max-w-lg p-6 sm:p-8 rounded-3xl text-center relative shadow-2xl">
+            <button onclick="closeDownloadModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+
+            <div class="w-16 h-16 bg-yellow-500/20 text-yellow-400 rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold mb-4 border border-yellow-500/30">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <h3 id="dlModalTitle" class="text-xl font-extrabold text-white mb-2">فتح رابط التحميل المباشر</h3>
+            <p class="text-xs text-slate-300 mb-6">المرجو مشاهدة الإعلان أدناه لمدة <span id="adTimerCount" class="text-yellow-400 font-bold text-base">10</span> ثوانٍ لفتح رابط التحميل وكسب <span class="text-emerald-400 font-bold">+10 نقاط</span> في حسابك.</p>
+
+            <!-- Ad Embed View Box -->
+            <div class="ad-banner-placeholder rounded-2xl p-6 mb-6 relative overflow-hidden border border-indigo-500/40">
+                <span class="text-[10px] bg-slate-900 text-indigo-300 px-2.5 py-0.5 rounded-full absolute top-2 right-2 font-bold">إعلان رعاية مكافئ</span>
+                <i class="fa-solid fa-wand-magic-sparkles text-4xl text-brand-400 mb-3 animate-bounce"></i>
+                <h4 class="font-bold text-white text-base">منصة الذكاء الاصطناعي للتصميم والتوليد</h4>
+                <p class="text-xs text-slate-400 mt-1">اشترك في باقة المصممين المحترفين واحصل على تجربة مجانية مدتها 30 يوماً.</p>
+            </div>
+
+            <!-- Action Status -->
+            <div id="dlActionBox">
+                <button id="dlTimerBtn" disabled class="w-full bg-slate-800 text-slate-400 py-3 rounded-xl font-bold text-sm cursor-not-allowed border border-slate-700 transition">
+                    انتظر <span id="adTimerSpan">10</span> ثوانٍ لتجهيز الرابط...
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 left-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl border border-brand-500/40 shadow-2xl flex items-center gap-3 transition-all transform translate-y-20 opacity-0 pointer-events-none">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMsg" class="text-sm font-semibold">تم الإجراء بنجاح</span>
+    </div>
+
+    <!-- JAVASCRIPT CORE -->
+    <script>
+        const STORAGE_USERS = 'techno_users_db_v2';
+        const STORAGE_CURRENT = 'techno_current_user_v2';
+        const STORAGE_POSTS = 'techno_posts_db_v2';
+
+        // Pre-configured Admin Credentials and Seed Users
+        const defaultUsers = [
+            { id: 1, name: 'Mohanad', email: 'dark500000000005@gmail.com', pass: '0995', role: 'admin', points: 3000, rank: 'Tech Legend', title: 'مؤسس المنصة' },
+            { id: 2, name: 'سارة التقنية', email: 'sara@gmail.com', pass: '123456', role: 'member', points: 420, rank: 'Tech Writer', title: 'مطور تطبيقات' },
+            { id: 3, name: 'خالد الذكاء الاصطناعي', email: 'khaled@gmail.com', pass: '123456', role: 'member', points: 210, rank: 'Tech Newbie', title: 'مهندس محتوى' }
+        ];
+
+        const defaultPosts = [
+            {
+                id: 101,
+                title: 'تطبيق محرر الصور بالذكاء الاصطناعي Pro Mod 2026',
+                category: 'editing',
+                author: 'سارة التقنية',
+                content: 'نسخة معدلة تحتوي على فتح جميع المؤثرات بالكامل والتصدير بجودة 4K مع أدوات التعديل الفوري عبر خوارزميات التفتيح التلقائي ومعالجة الخلفية.',
+                fileSize: '120 MB',
+                downloadUrl: 'https://example.com/download/app1.apk',
+                date: '2026-10-30',
+                likes: 34
+            },
+            {
+                id: 102,
+                title: 'أداة Gemini Code Script لمشروعات Web',
+                category: 'ai-tools',
+                author: 'Mohanad',
+                content: 'سكريبت متكامل يربط واجهة API الخاصة بـ Gemini لتسهيل توليد المقالات وتوزيع الإعلانات تلقائياً داخل مواقع الويب بشكل احترافي.',
+                fileSize: '4.5 MB',
+                downloadUrl: 'https://example.com/download/script.zip',
+                date: '2026-10-31',
+                likes: 89
+            },
+            {
+                id: 103,
+                title: 'برنامج تحسين سرعة الألعاب والذاكرة RAM Booster',
+                category: 'software',
+                author: 'خالد الذكاء الاصطناعي',
+                content: 'برنامج خفيف للحاسوب يقوم بتنظيف الذاكرة العشوائية أثناء تشغيل التطبيقات الثقيلة وأدوات التعديل بدون إعادة تشغيل الجهاز.',
+                fileSize: '18 MB',
+                downloadUrl: 'https://example.com/download/booster.exe',
+                date: '2026-10-29',
+                likes: 19
+            }
+        ];
+
+        // Global State
+        let users = JSON.parse(localStorage.getItem(STORAGE_USERS)) || defaultUsers;
+        let posts = JSON.parse(localStorage.getItem(STORAGE_POSTS)) || defaultPosts;
+        let currentUser = JSON.parse(localStorage.getItem(STORAGE_CURRENT)) || null;
+
+        // Ensure Admin user always exists with requested specs
+        const adminIndex = users.findIndex(u => u.name === 'Mohanad' || u.role === 'admin' || u.email === 'dark500000000005@gmail.com');
+        if (adminIndex !== -1) {
+            users[adminIndex].name = 'Mohanad';
+            users[adminIndex].email = 'dark500000000005@gmail.com';
+            users[adminIndex].pass = '0995';
+            users[adminIndex].role = 'admin';
+        } else {
+            users.unshift({ id: 1, name: 'Mohanad', email: 'dark500000000005@gmail.com', pass: '0995', role: 'admin', points: 3000, rank: 'Tech Legend', title: 'مؤسس المنصة' });
+        }
+
+        let pendingRegistration = null;
+        let pendingDownloadPost = null;
+        let timerInterval = null;
+
+        function saveDB() {
+            localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+            localStorage.setItem(STORAGE_POSTS, JSON.stringify(posts));
+            if (currentUser) {
+                const updatedCurrent = users.find(u => u.id === currentUser.id);
+                if (updatedCurrent) {
+                    currentUser = updatedCurrent;
+                    localStorage.setItem(STORAGE_CURRENT, JSON.stringify(currentUser));
+                }
+            } else {
+                localStorage.removeItem(STORAGE_CURRENT);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            saveDB();
+            renderHeaderAuth();
+            renderSidebarUser();
+            renderFeeds();
+            renderLeaderboard();
+            renderAdminPanel();
+        });
+
+        function closeWelcomeBanner() {
+            document.getElementById('welcomeBanner').style.display = 'none';
+        }
+
+        function showToast(msg, icon = 'fa-circle-check', color = 'text-emerald-400') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            toastIcon.className = `fa-solid ${icon} ${color} text-lg`;
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3500);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-brand-500', 'bg-slate-800');
+                btn.classList.add('text-slate-400');
+            });
+
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.add('text-brand-500', 'bg-slate-800');
+                activeNav.classList.remove('text-slate-400');
+            }
+
+            if (tabId === 'admin' && (!currentUser || currentUser.role !== 'admin')) {
+                showToast('لوحة التحكم متاحة فقط للمدير (Mohanad)', 'fa-triangle-exclamation', 'text-amber-400');
+                switchTab('home');
+            }
+        }
+
+        function renderHeaderAuth() {
+            const area = document.getElementById('authArea');
+            if (currentUser) {
+                const isAdmin = currentUser.role === 'admin' || currentUser.name === 'Mohanad';
+                area.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="text-left hidden sm:block">
+                            <span class="block text-xs font-bold text-white">${currentUser.name}</span>
+                            <span class="text-[10px] text-yellow-400 font-semibold"><i class="fa-solid fa-coins ml-1"></i>${currentUser.points} نقطة</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-brand-600/30 border border-brand-500 flex items-center justify-center text-brand-400 font-bold cursor-pointer" onclick="switchTab('community')">
+                            ${currentUser.name.charAt(0)}
+                        </div>
+                        ${isAdmin ? `
+                            <button onclick="switchTab('admin')" class="bg-red-500/20 text-red-400 border border-red-500/40 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-user-shield"></i> لوحة الأدمن
+                            </button>
+                        ` : ''}
+                        <button onclick="logout()" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 text-sm transition" title="تسجيل الخروج">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                area.innerHTML = `
+                    <button onclick="openAuthModal('login')" class="text-slate-300 hover:text-white px-3 py-2 text-sm font-bold">دخول</button>
+                    <button onclick="openAuthModal('register')" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg shadow-brand-600/30 transition">
+                        تسجيل حساب
+                    </button>
+                `;
+            }
+        }
+
+        function renderSidebarUser() {
+            const box = document.getElementById('sidebarUserStatus');
+            if (currentUser) {
+                box.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-500 to-purple-500 flex items-center justify-center text-white text-xl font-bold">
+                                ${currentUser.name.charAt(0)}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">${currentUser.name}</h4>
+                                <span class="text-xs text-indigo-400">${currentUser.title || 'عضو مميز'}</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                            <span class="text-slate-400">رتبتك:</span>
+                            <span class="font-bold text-yellow-400">${currentUser.rank}</span>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                            <span class="text-slate-400">رصيد النقاط:</span>
+                            <span class="font-bold text-emerald-400">${currentUser.points} نقطة</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                box.innerHTML = `
+                    <div class="text-center py-4 space-y-3">
+                        <p class="text-xs text-slate-400">سجل الدخول بحسابك أو بحساب الأدمن (Mohanad / 0995) للوصول لكافة المزايا.</p>
+                        <button onclick="openAuthModal('login')" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-2 rounded-xl font-bold text-xs shadow-md transition">
+                            تسجيل الدخول الآن
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function renderFeeds() {
+            const mainGrid = document.getElementById('mainFeedGrid');
+            const softwareGrid = document.getElementById('softwareFeed');
+            const appsGrid = document.getElementById('appsFeed');
+            const editingGrid = document.getElementById('editingFeed');
+
+            mainGrid.innerHTML = '';
+            softwareGrid.innerHTML = '';
+            appsGrid.innerHTML = '';
+            editingGrid.innerHTML = '';
+
+            posts.forEach(post => {
+                const cardHtml = createPostCard(post);
+                mainGrid.innerHTML += cardHtml;
+
+                if (post.category === 'software') softwareGrid.innerHTML += cardHtml;
+                if (post.category === 'apps') appsGrid.innerHTML += cardHtml;
+                if (post.category === 'editing') editingGrid.innerHTML += cardHtml;
+            });
+        }
+
+        function createPostCard(post) {
+            let catBadge = 'البرامج والتكنولوجيا';
+            let catColor = 'bg-brand-500/20 text-brand-400 border-brand-500/30';
+
+            if (post.category === 'apps') { catBadge = 'التطبيقات'; catColor = 'bg-purple-500/20 text-purple-400 border-purple-500/30'; }
+            if (post.category === 'editing') { catBadge = 'أدوات التعديل'; catColor = 'bg-pink-500/20 text-pink-400 border-pink-500/30'; }
+            if (post.category === 'ai-tools') { catBadge = 'ذكاء اصطناعي'; catColor = 'bg-amber-500/20 text-amber-400 border-amber-500/30'; }
+
+            return `
+                <div class="glass-panel rounded-3xl p-6 border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="text-[11px] font-bold px-2.5 py-1 rounded-full border ${catColor}">${catBadge}</span>
+                            <span class="text-slate-500 text-xs">${post.date}</span>
+                        </div>
+                        <h3 class="font-extrabold text-white text-base mb-2 line-clamp-2">${post.title}</h3>
+                        <p class="text-slate-300 text-xs leading-relaxed line-clamp-3 mb-4">${post.content}</p>
+                    </div>
+
+                    <div class="border-t border-slate-800 pt-4 space-y-3">
+                        <div class="flex items-center justify-between text-xs text-slate-400">
+                            <span><i class="fa-solid fa-user-pen ml-1"></i>${post.author}</span>
+                            ${post.fileSize ? `<span class="bg-slate-900 px-2 py-0.5 rounded text-[11px] border border-slate-800">${post.fileSize}</span>` : ''}
+                        </div>
+
+                        ${post.downloadUrl ? `
+                            <button onclick="openDownloadRewardModal(${post.id})" class="w-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white py-2.5 rounded-xl text-xs font-bold shadow-md transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download"></i> مشاهدة إعلان وتحميل الملف
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLeaderboard() {
+            const body = document.getElementById('leaderboardBody');
+            body.innerHTML = '';
+
+            const sorted = [...users].sort((a, b) => b.points - a.points);
+            sorted.forEach((u, idx) => {
+                body.innerHTML += `
+                    <tr class="hover:bg-slate-800/40 transition">
+                        <td class="p-4 flex items-center gap-3">
+                            <span class="w-6 text-center font-bold text-slate-500 text-xs">#${idx + 1}</span>
+                            <div class="w-8 h-8 rounded-full bg-brand-600/30 text-brand-400 font-bold flex items-center justify-center text-xs border border-brand-500">
+                                ${u.name.charAt(0)}
+                            </div>
+                            <span class="font-bold text-white">${u.name}</span>
+                        </td>
+                        <td class="p-4"><span class="text-xs bg-slate-900 px-2.5 py-1 rounded-full text-yellow-400 border border-slate-800">${u.rank}</span></td>
+                        <td class="p-4 text-slate-300 text-xs">${u.title || 'عضو نشط'}</td>
+                        <td class="p-4 font-bold text-emerald-400 text-xs">${u.points} نقطة</td>
+                        <td class="p-4 text-slate-400 text-xs">${posts.filter(p => p.author === u.name).length} مشاركة</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderAdminPanel() {
+            document.getElementById('adminTotalUsers').innerText = users.length;
+            document.getElementById('adminTotalPosts').innerText = posts.length;
+            document.getElementById('adminTotalPoints').innerText = users.reduce((acc, curr) => acc + curr.points, 0);
+
+            const uTable = document.getElementById('adminUsersTable');
+            uTable.innerHTML = '';
+            users.forEach(u => {
+                uTable.innerHTML += `
+                    <tr>
+                        <td class="p-3 font-semibold text-white">${u.name}</td>
+                        <td class="p-3 text-yellow-400">${u.rank}</td>
+                        <td class="p-3 text-emerald-400">${u.points}</td>
+                        <td class="p-3 flex gap-1">
+                            <button onclick="adminAddPoints(${u.id})" class="bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-white px-2 py-1 rounded text-[10px] font-bold transition">+100 نقطة</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            const pList = document.getElementById('adminPostsList');
+            pList.innerHTML = '';
+            posts.forEach(p => {
+                pList.innerHTML += `
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-white line-clamp-1">${p.title}</p>
+                            <span class="text-[10px] text-slate-400">بواسطة: ${p.author}</span>
+                        </div>
+                        <button onclick="adminDeletePost(${p.id})" class="text-red-400 hover:text-red-300 p-1.5 rounded hover:bg-slate-800 transition" title="حذف">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function adminAddPoints(userId) {
+            const u = users.find(user => user.id === userId);
+            if (u) {
+                u.points += 100;
+                updateRank(u);
+                saveDB();
+                renderLeaderboard();
+                renderAdminPanel();
+                renderHeaderAuth();
+                renderSidebarUser();
+                showToast(`تم إضافة 100 نقطة للعضو ${u.name}`);
+            }
+        }
+
+        function adminDeletePost(postId) {
+            posts = posts.filter(p => p.id !== postId);
+            saveDB();
+            renderFeeds();
+            renderAdminPanel();
+            showToast('تم حذف المشاركة بنجاح');
+        }
+
+        function updateRank(user) {
+            if (user.role === 'admin' || user.name === 'Mohanad') user.rank = 'Tech Legend';
+            else if (user.points >= 1000) user.rank = 'Software Expert';
+            else if (user.points >= 500) user.rank = 'Tech Writer';
+            else user.rank = 'Tech Newbie';
+        }
+
+        function openAuthModal(mode) {
+            document.getElementById('authModal').classList.remove('hidden');
+            toggleAuthTab(mode);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+            document.getElementById('authStepForm').classList.remove('hidden');
+            document.getElementById('authStepOTP').classList.add('hidden');
+        }
+
+        function toggleAuthTab(mode) {
+            const loginForm = document.getElementById('loginForm');
+            const regForm = document.getElementById('registerForm');
+            const btnLogin = document.getElementById('tabBtnLogin');
+            const btnReg = document.getElementById('tabBtnRegister');
+
+            if (mode === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                btnLogin.classList.add('text-brand-500', 'border-b-2', 'border-brand-500');
+                btnReg.classList.remove('text-brand-500', 'border-b-2', 'border-brand-500');
+                btnReg.classList.add('text-slate-400');
+            } else {
+                regForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                btnReg.classList.add('text-brand-500', 'border-b-2', 'border-brand-500');
+                btnLogin.classList.remove('text-brand-500', 'border-b-2', 'border-brand-500');
+                btnLogin.classList.add('text-slate-400');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const inputVal = document.getElementById('loginEmail').value.trim();
+            const passVal = document.getElementById('loginPass').value.trim();
+
+            const user = users.find(u => (u.email === inputVal || u.name === inputVal) && u.pass === passVal);
+            if (user) {
+                currentUser = user;
+                saveDB();
+                renderHeaderAuth();
+                renderSidebarUser();
+                closeAuthModal();
+                showToast(`أهلاً بعودتك يا ${user.name}!`);
+                if (user.role === 'admin' || user.name === 'Mohanad') {
+                    switchTab('admin');
+                }
+            } else {
+                showToast('البيانات غير صحيحة. تذكر: الأدمن (Mohanad / 0995)', 'fa-circle-xmark', 'text-red-400');
+            }
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMsg').value = '';
+            showToast('تم إرسال رسالتك بنجاح وسنتواصل معك قريباً');
+        }
+
+        function startRegistration(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+
+            if (users.some(u => u.email === email)) {
+                showToast('هذا البريد الإلكتروني مسجل بالفعل', 'fa-circle-xmark', 'text-red-400');
+                return;
+            }
+
+            pendingRegistration = { name, email, pass };
+
+            document.getElementById('authStepForm').classList.add('hidden');
+            document.getElementById('authStepOTP').classList.remove('hidden');
+        }
+
+        function verifyOTPAndFinish() {
+            const input = document.getElementById('otpInput').value;
+            if (input === '1234' && pendingRegistration) {
+                const newUser = {
+                    id: Date.now(),
+                    name: pendingRegistration.name,
+                    email: pendingRegistration.email,
+                    pass: pendingRegistration.pass,
+                    role: 'member',
+                    points: 50,
+                    rank: 'Tech Newbie',
+                    title: 'عضو مجتمعي'
+                };
+                users.push(newUser);
+                currentUser = newUser;
+                saveDB();
+
+                renderHeaderAuth();
+                renderSidebarUser();
+                renderLeaderboard();
+                renderAdminPanel();
+
+                closeAuthModal();
+                showToast('تم تفعيل الحساب وتلقيت 50 نقطة مكافأة!');
+                pendingRegistration = null;
+            } else {
+                showToast('رمز OTP غير صحيح. حاول تجربة 1234', 'fa-circle-xmark', 'text-red-400');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem(STORAGE_CURRENT);
+            renderHeaderAuth();
+            renderSidebarUser();
+            showToast('تم تسجيل الخروج');
+            switchTab('home');
+        }
+
+        function openPublishModal() {
+            if (!currentUser) {
+                showToast('المرجو تسجيل الدخول أولاً لتتمكن من النشر', 'fa-lock', 'text-yellow-400');
+                openAuthModal('login');
+                return;
+            }
+            document.getElementById('publishModal').classList.remove('hidden');
+        }
+
+        function closePublishModal() {
+            document.getElementById('publishModal').classList.add('hidden');
+        }
+
+        function handlePublish(e) {
+            e.preventDefault();
+            const title = document.getElementById('pubTitle').value;
+            const category = document.getElementById('pubCategory').value;
+            const downloadUrl = document.getElementById('pubDownloadUrl').value;
+            const content = document.getElementById('pubContent').value;
+            const fileSize = document.getElementById('pubFileSize').value;
+
+            const newPost = {
+                id: Date.now(),
+                title,
+                category,
+                author: currentUser.name,
+                content,
+                fileSize: fileSize || 'غير محدد',
+                downloadUrl: downloadUrl || null,
+                date: new Date().toISOString().split('T')[0],
+                likes: 0
+            };
+
+            posts.unshift(newPost);
+
+            currentUser.points += 25;
+            updateRank(currentUser);
+            saveDB();
+
+            renderFeeds();
+            renderLeaderboard();
+            renderAdminPanel();
+            renderHeaderAuth();
+            renderSidebarUser();
+
+            closePublishModal();
+            showToast('تم نشر مشاركتك واحتساب +25 نقطة لك!');
+        }
+
+        function openDownloadRewardModal(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            pendingDownloadPost = post;
+            document.getElementById('dlModalTitle').innerText = `تحميل: ${post.title}`;
+            document.getElementById('rewardDownloadModal').classList.remove('hidden');
+
+            startAdTimer();
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('rewardDownloadModal').classList.add('hidden');
+            if (timerInterval) clearInterval(timerInterval);
+        }
+
+        function startAdTimer() {
+            let timeLeft = 10;
+            const timerCount = document.getElementById('adTimerCount');
+            const actionBox = document.getElementById('dlActionBox');
+
+            actionBox.innerHTML = `
+                <button id="dlTimerBtn" disabled class="w-full bg-slate-800 text-slate-400 py-3 rounded-xl font-bold text-sm cursor-not-allowed border border-slate-700 transition">
+                    انتظر <span id="adTimerSpan">${timeLeft}</span> ثوانٍ لتجهيز الرابط...
+                </button>
+            `;
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const sp = document.getElementById('adTimerSpan');
+                if (sp) sp.innerText = timeLeft;
+                if (timerCount) timerCount.innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    unlockDownload();
+                }
+            }, 1000);
+        }
+
+        function unlockDownload() {
+            const actionBox = document.getElementById('dlActionBox');
+            if (!pendingDownloadPost) return;
+
+            if (currentUser) {
+                currentUser.points += 10;
+                updateRank(currentUser);
+                saveDB();
+                renderHeaderAuth();
+                renderSidebarUser();
+            }
+
+            actionBox.innerHTML = `
+                <a href="${pendingDownloadPost.downloadUrl}" target="_blank" onclick="closeDownloadModal()" class="block w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-bold text-sm shadow-xl transition">
+                    <i class="fa-solid fa-cloud-arrow-down ml-2"></i> تحميل الملف الآن (+10 نقاط مكافأة)
+                </a>
+            `;
+            showToast('تم فتح رابط التحميل المباشر بنجاح!');
+        }
+
+        function triggerAdClick(source) {
+            if (currentUser) {
+                currentUser.points += 15;
+                updateRank(currentUser);
+                saveDB();
+                renderHeaderAuth();
+                renderSidebarUser();
+                renderLeaderboard();
+                showToast('شكراً لمشاهدة الإعلان! تم إضافة +15 نقطة لرصيدك');
+            } else {
+                showToast('سجل الدخول لكسب النقاط عند مشاهدة الإعلانات', 'fa-info-circle', 'text-brand-400');
+            }
+        }
+
+        async function handleAISubmit(e) {
+            e.preventDefault();
+            const inputEl = document.getElementById('aiInput');
+            const prompt = inputEl.value.trim();
+            if (!prompt) return;
+
+            appendChatMessage('user', prompt);
+            inputEl.value = '';
+
+            const sendBtn = document.getElementById('aiSendBtn');
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> جاري التوليد...`;
+
+            try {
+                const systemPrompt = "أنت مساعد ذكي مخصص لمنصة تكنو هَب التقنية. قم بإجابة المستخدم باللغة العربية بطريقة احترافية مع تنسيق الأكواد البرمجية والمقالات بشكل منظم جداً ومفيد للمطورين والمصممين.";
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    })
+                });
+
+                const data = await response.json();
+                const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أتمكن من معالجة الطلب حالياً. المرجو المحاولة مرة أخرى.";
+                
+                appendChatMessage('ai', aiText);
+            } catch (err) {
+                appendChatMessage('ai', 'حدث خطأ أثناء الاتصال بخدمة الذكاء الاصطناعي. المرجو التأكد من الاتصال بالإنترنت.');
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = `<span>إرسال</span> <i class="fa-solid fa-paper-plane text-xs"></i>`;
+            }
+        }
+
+        function quickAIPrompt(text) {
+            document.getElementById('aiInput').value = text;
+            handleAISubmit(new Event('submit'));
+        }
+
+        function appendChatMessage(sender, message) {
+            const log = document.getElementById('aiChatLog');
+            const isUser = sender === 'user';
+
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`;
+
+            msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-lg ${isUser ? 'bg-brand-600 text-white' : 'bg-amber-500/20 text-amber-400'} flex items-center justify-center font-bold text-sm shrink-0">
+                    ${isUser ? 'أنت' : 'AI'}
+                </div>
+                <div class="${isUser ? 'bg-brand-600/20 text-white border-brand-500/30' : 'bg-slate-800 text-slate-200 border-slate-700'} p-4 rounded-2xl ${isUser ? 'rounded-tl-none' : 'rounded-tr-none'} text-sm leading-relaxed max-w-[85%] border whitespace-pre-wrap">
+                    ${message}
+                </div>
+            `;
+
+            log.appendChild(msgDiv);
+            log.scrollTop = log.scrollHeight;
+        }
+    </script>
+</body>
+</html>
